@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFEFE"
+    tools:context=".Fragment.AccountFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewAccountPicture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/acount_icon" />
+
+        <TextView
+            android:id="@+id/textViewNameAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:text="Email: "
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewEmailAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="10dp"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:text="Address:"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewAddressAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="10dp"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:text="Phone:"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewPhoneAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="10dp"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonUpdateProfilePic"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#939292"
+            android:text="UPDATE PICTURE"
+            app:icon="@drawable/camera_icon"
+            app:iconSize="25dp" />
+
+        <Button
+            android:id="@+id/buttonUpdateProfile"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#48D34D"
+            android:text="UPDATE PROFILE"
+            app:icon="@drawable/acount_icon"
+            app:iconSize="25dp" />
+
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#FF0000"
+            android:text="LOGOUT"
+            app:icon="@drawable/logout_icon"
+            app:iconSize="25dp" />
+    </LinearLayout>
+
+</FrameLayout>
