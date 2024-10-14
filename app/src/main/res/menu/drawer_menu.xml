@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Filter Section -->
+    <item
+        android:id="@+id/nav_filter"
+        android:title="Filter">
+    </item>
+
+
+            <!-- Status Group -->
+            <item
+                android:id="@+id/nav_status"
+                android:title="Status"
+                android:checkable="false">
+                <menu>
+                        <item
+                            android:id="@+id/status_option_1"
+                            android:title="Available"
+                            app:actionLayout="@layout/filter_checkbox" />
+                        <item
+                            android:id="@+id/status_option_2"
+                            android:title="Unavailable"
+                            app:actionLayout="@layout/filter_checkbox" />
+                </menu>
+            </item>
+
+            <!-- Type Group -->
+            <item
+                android:id="@+id/nav_type"
+                android:title="Type"
+                android:checkable="false">
+                <menu>
+
+                        <item
+                            android:id="@+id/type_option_1"
+                            android:title="For Sell"
+                            app:actionLayout="@layout/filter_checkbox" />
+                        <item
+                            android:id="@+id/type_option_2"
+                            android:title="For Rent"
+                            app:actionLayout="@layout/filter_checkbox" />
+                        <item
+                            android:id="@+id/type_option_3"
+                            android:title="For Donation"
+                            app:actionLayout="@layout/filter_checkbox" />
+
+                </menu>
+            </item>
+
+            <!-- Price Range Group -->
+            <item
+                android:id="@+id/nav_price"
+                android:title="Price Range"
+                android:checkable="false">
+                <!-- Custom layout for min and max input -->
+                <menu>
+                    <item
+                        android:id="@+id/nav_price_min"
+                        android:title="Min Price"
+                        app:actionLayout="@layout/custom_min_price_input" />
+                    <item
+                        android:id="@+id/nav_price_max"
+                        android:title="Max Price"
+                        app:actionLayout="@layout/custom_max_price_input" />
+                </menu>
+            </item>
+
+            <!-- Category Group -->
+            <item
+                android:id="@+id/nav_category"
+                android:title="Category"
+                android:checkable="false">
+                <menu>
+                    <group android:checkableBehavior="single">
+                        <item
+                            android:id="@+id/category_option_1"
+                            android:title="Option 1"
+                            app:actionLayout="@layout/filter_checkbox" />
+                        <item
+                            android:id="@+id/category_option_2"
+                            android:title="Option 2"
+                            app:actionLayout="@layout/filter_checkbox" />
+                    </group>
+                </menu>
+            </item>
+
+
+            <!-- "Used For" Filter Section -->
+
+            <item
+                android:id="@+id/nav_used_for"
+                android:title="Used For"
+                android:checkable="false">
+                <menu>
+                    <group android:checkableBehavior="single">
+                        <item
+                            android:id="@+id/used_for_casual"
+                            android:title="Casual"
+                            app:actionLayout="@layout/filter_checkbox" />
+                        <item
+                            android:id="@+id/used_for_formal"
+                            android:title="Formal"
+                            app:actionLayout="@layout/filter_checkbox" />
+                        <item
+                            android:id="@+id/used_for_party"
+                            android:title="Party"
+                            app:actionLayout="@layout/filter_checkbox" />
+                        <item
+                            android:id="@+id/used_for_sports"
+                            android:title="Sports"
+                            app:actionLayout="@layout/filter_checkbox" />
+                    </group>
+                </menu>
+            </item>
+
+
+
+
+
+
+
+    <group
+        android:id="@+id/group1">
+        <item
+            android:id = "@+id/nav_sell_rent"
+            android:title = "Sell/Rent Cloth">
+
+        </item>
+
+        <item
+            android:id = "@+id/nav_donate"
+            android:title = "Donate Cloth">
+
+        </item>
+    </group>
+
+    <item
+        android:id = "@+id/nav_history"
+        android:title = "History">
+
+    </item>
+
+    <item
+        android:id="@+id/nav_contact_us"
+        android:title="Contact Us">
+
+    </item>
+
+
+</menu>

@@ -37,7 +37,7 @@ public class PictureUploadActivity extends AppCompatActivity {
     ImageView selectImage;
     Button upload;
     private Bitmap bitmap;
-    private static final int IMAGE_REQUEST = 1;
+    public static final int IMAGE_REQUEST = 1;
     private String userEmail;
 
     @Override
