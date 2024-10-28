@@ -106,7 +106,7 @@ public class AccountFragment extends Fragment {
 
     public void setInfo()
     {
-        String url = "http://" + ip_address + "/get_user_info.php"; // Change ip_address accordingly
+        String url = "http://" + ip_address + "/app_get_user_info.php"; // Change ip_address accordingly
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -195,7 +195,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void uploadImage() {
-        String url = "http://"+ip_address+"/upload_image.php"; // Change to your IP address
+        String url = "http://"+ip_address+"/app_upload_image.php"; // Change to your IP address
 
         // Convert Bitmap to Base64 encoded string
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

@@ -90,7 +90,7 @@ public class PictureUploadActivity extends AppCompatActivity {
     public void uploadImage()
     {
 
-        String url = "http://"+ip_address+"/upload_image.php"; // Change to your IP address
+        String url = "http://"+ip_address+"/app_upload_image.php"; // Change to your IP address
 
         // Convert Bitmap to Base64 encoded string
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

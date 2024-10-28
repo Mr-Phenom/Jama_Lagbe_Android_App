@@ -9,13 +9,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.Fragment.AccountFragment;
 import com.example.myapplication.Fragment.FavouritesFragment;
@@ -25,13 +31,21 @@ import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityDashboardBinding;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DashboardActivity extends AppCompatActivity {
 
     ActivityDashboardBinding binding;
-    String email;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ImageView imageViewSideBar;
+    Menu menu;
+    private List<String> selectedTypes = new ArrayList<>();
+    private List<String> selectedStatus = new ArrayList<>();
+    private List<String> selectedCondition = new ArrayList<>();
+    private String maxPrice="";
+    private String minPrice="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +53,11 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
-        //email = getIntent().getStringExtra("email");
 
         imageViewSideBar = findViewById(R.id.imageViewDrawerMenu);
 
         navigationView = (NavigationView) findViewById(R.id.sideNavigationView);
-        Menu menu = navigationView.getMenu();
+        menu = navigationView.getMenu();
 
         drawerLayout = findViewById(R.id.drawerLayout);
         imageViewSideBar.setOnClickListener(new View.OnClickListener() {
@@ -53,26 +66,9 @@ public class DashboardActivity extends AppCompatActivity {
                 drawerLayout.open();
             }
         });
-        //status checkbox
-        MenuItem statusAvailableItem = menu.findItem(R.id.status_option_1);
-        CheckBox statusAvailableCheckBox = statusAvailableItem.getActionView().findViewById(R.id.filter_checkbox);
 
 
-        MenuItem statusUnavailableItem = menu.findItem(R.id.status_option_2);
-        CheckBox statusUnavailableCheckBox = statusUnavailableItem.getActionView().findViewById(R.id.filter_checkbox);
 
-
-        statusAvailableCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Do something when Available is checked
-            }
-        });
-
-        statusUnavailableCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Do something when Unavailable is checked
-            }
-        });
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -100,9 +96,13 @@ public class DashboardActivity extends AppCompatActivity {
         itemClickedFromSideNavigation();
     }
 
+
+
     private void itemClickedFromSideNavigation()
     {
         navigationView.setNavigationItemSelectedListener(item -> {
+
+
             if(item.getItemId()==R.id.nav_sell_rent)
             {
                 Intent intent = new Intent(DashboardActivity.this,SellRentActivity.class);
@@ -113,12 +113,123 @@ public class DashboardActivity extends AppCompatActivity {
             else if(item.getItemId()==R.id.nav_donate)
             {
                 Intent intent = new Intent(DashboardActivity.this,SellRentActivity.class);
-                intent.putExtra("type","donate");
+                intent.putExtra("type","donation");
                 startActivity(intent);
                 return true;
             }
-            return false;
+
+
+            return true;
         });
+
+
+
+        CheckBox statusAvailable =(CheckBox) menu.findItem(R.id.status_option_1).getActionView().findViewById(R.id.filter_checkbox);
+        CheckBox statusUnavailable = menu.findItem(R.id.status_option_2).getActionView().findViewById(R.id.filter_checkbox);
+
+        if(statusAvailable!=null)
+    {
+
+        statusAvailable.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+
+            if (isChecked) {
+                selectedStatus.add("available");
+            } else {
+                selectedStatus.remove("available");
+            }
+            updateHomeFragment();
+
+        });
+    }
+
+
+        statusUnavailable.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                selectedStatus.add("unavailable");
+            } else {
+                selectedStatus.remove("unavailable");
+            }
+            updateHomeFragment();
+        });
+
+        CheckBox sellCheckBox = menu.findItem(R.id.type_option_1).getActionView().findViewById(R.id.filter_checkbox);
+        CheckBox rentCheckBox = menu.findItem(R.id.type_option_2).getActionView().findViewById(R.id.filter_checkbox);
+        CheckBox donateCheckBox = menu.findItem(R.id.type_option_3).getActionView().findViewById(R.id.filter_checkbox);
+
+
+        sellCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) selectedTypes.add("sale");
+            else selectedTypes.remove("sale");
+            updateHomeFragment();
+        });
+
+        rentCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) selectedTypes.add("rent");
+            else selectedTypes.remove("rent");
+            updateHomeFragment();
+        });
+
+        donateCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) selectedTypes.add("donation");
+            else selectedTypes.remove("donation");
+            updateHomeFragment();
+        });
+
+        CheckBox usedCheckBox = menu.findItem(R.id.Condition_used).getActionView().findViewById(R.id.filter_checkbox);
+        CheckBox newCheckBox = menu.findItem(R.id.condition_new).getActionView().findViewById(R.id.filter_checkbox);
+
+        usedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) selectedCondition.add("used");
+            else selectedCondition.remove("used");
+            updateHomeFragment();
+        });
+        newCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) selectedCondition.add("new");
+            else selectedCondition.remove("new");
+            updateHomeFragment();
+        });
+
+
+        TextView minPriceView = menu.findItem(R.id.nav_price_min).getActionView().findViewById(R.id.min_price_input);
+        TextView maxPriceView = menu.findItem(R.id.nav_price_max).getActionView().findViewById(R.id.max_price_input);
+
+        minPriceView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                minPrice = s.toString();
+                updateHomeFragment();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
+
+        maxPriceView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                maxPrice = s.toString();
+                updateHomeFragment();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
+    }
+
+
+    private void updateHomeFragment() {
+        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.dashboardFrameLayout);
+        if (homeFragment != null) {
+            homeFragment.applyFilters(selectedTypes,selectedStatus,selectedCondition, minPrice, maxPrice);
+        }
+
     }
     private void replaceFragment(Fragment fragment)
     {

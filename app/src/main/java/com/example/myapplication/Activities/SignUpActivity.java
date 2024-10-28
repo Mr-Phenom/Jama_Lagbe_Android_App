@@ -64,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://"+ip_address+"/signup.php", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://"+ip_address+"/app_signup.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {

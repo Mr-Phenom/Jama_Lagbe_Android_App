@@ -29,11 +29,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    //public static String ip_address = "10.0.2.2";
     public static String ip_address = "10.0.2.2";
 
 
     //private String URL = "http://10.0.2.2/jama_lagbe/login.php";
-    private String URL = "http://"+ ip_address +"/login.php";
+    private String URL = "http://"+ ip_address +"/app_login.php";
     private EditText userName, password;
     private Button logIn;
     private TextView signUp;

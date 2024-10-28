@@ -2,6 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
+    <group
+        android:id="@+id/group1">
+        <item
+            android:id = "@+id/nav_sell_rent"
+            android:title = "Sell/Rent Cloth">
+
+        </item>
+
+        <item
+            android:id = "@+id/nav_donate"
+            android:title = "Donate Cloth">
+
+        </item>
+    </group>
+
     <!-- Filter Section -->
     <item
         android:id="@+id/nav_filter"
@@ -15,6 +32,10 @@
                 android:title="Status"
                 android:checkable="false">
                 <menu>
+
+                    <group
+                        android:id="@+id/group_filters"
+                        android:visible="true">
                         <item
                             android:id="@+id/status_option_1"
                             android:title="Available"
@@ -23,6 +44,8 @@
                             android:id="@+id/status_option_2"
                             android:title="Unavailable"
                             app:actionLayout="@layout/filter_checkbox" />
+                    </group>
+
                 </menu>
             </item>
 
@@ -68,73 +91,48 @@
             </item>
 
             <!-- Category Group -->
-            <item
-                android:id="@+id/nav_category"
-                android:title="Category"
-                android:checkable="false">
-                <menu>
-                    <group android:checkableBehavior="single">
-                        <item
-                            android:id="@+id/category_option_1"
-                            android:title="Option 1"
-                            app:actionLayout="@layout/filter_checkbox" />
-                        <item
-                            android:id="@+id/category_option_2"
-                            android:title="Option 2"
-                            app:actionLayout="@layout/filter_checkbox" />
-                    </group>
-                </menu>
-            </item>
+<!--            <item-->
+<!--                android:id="@+id/nav_category"-->
+<!--                android:title="Category"-->
+<!--                android:checkable="false">-->
+<!--                <menu>-->
+<!--                    <group android:checkableBehavior="single">-->
+<!--                        <item-->
+<!--                            android:id="@+id/category_option_1"-->
+<!--                            android:title="Option 1"-->
+<!--                            app:actionLayout="@layout/filter_checkbox" />-->
+<!--                        <item-->
+<!--                            android:id="@+id/category_option_2"-->
+<!--                            android:title="Option 2"-->
+<!--                            app:actionLayout="@layout/filter_checkbox" />-->
+<!--                    </group>-->
+<!--                </menu>-->
+<!--            </item>-->
 
 
             <!-- "Used For" Filter Section -->
 
             <item
                 android:id="@+id/nav_used_for"
-                android:title="Used For"
+                android:title="Condition"
                 android:checkable="false">
                 <menu>
                     <group android:checkableBehavior="single">
                         <item
-                            android:id="@+id/used_for_casual"
-                            android:title="Casual"
+                            android:id="@+id/condition_new"
+                            android:title="New"
                             app:actionLayout="@layout/filter_checkbox" />
                         <item
-                            android:id="@+id/used_for_formal"
-                            android:title="Formal"
+                            android:id="@+id/Condition_used"
+                            android:title="Used"
                             app:actionLayout="@layout/filter_checkbox" />
-                        <item
-                            android:id="@+id/used_for_party"
-                            android:title="Party"
-                            app:actionLayout="@layout/filter_checkbox" />
-                        <item
-                            android:id="@+id/used_for_sports"
-                            android:title="Sports"
-                            app:actionLayout="@layout/filter_checkbox" />
+
                     </group>
                 </menu>
             </item>
 
 
 
-
-
-
-
-    <group
-        android:id="@+id/group1">
-        <item
-            android:id = "@+id/nav_sell_rent"
-            android:title = "Sell/Rent Cloth">
-
-        </item>
-
-        <item
-            android:id = "@+id/nav_donate"
-            android:title = "Donate Cloth">
-
-        </item>
-    </group>
 
     <item
         android:id = "@+id/nav_history"

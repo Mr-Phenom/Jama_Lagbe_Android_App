@@ -80,7 +80,7 @@ public class SellRentActivity extends AppCompatActivity {
 
 
         //if donation then disabling available for and pricing
-        if(type.equals("donate"))
+        if(type.equals("donation"))
         {
             editTextPrice.setText(""+00);
             editTextPrice.setInputType(InputType.TYPE_NULL);
@@ -156,7 +156,7 @@ public class SellRentActivity extends AppCompatActivity {
     public void uploadItem()
     {
 
-        String url = "http://"+ip_address+"/upload_item.php"; // Change to your IP address
+        String url = "http://"+ip_address+"/app_upload_item.php"; // Change to your IP address
 
         // Convert Bitmap to Base64 encoded string
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
