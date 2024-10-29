@@ -1,9 +1,15 @@
 package com.example.myapplication.Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.myapplication.MainActivity.ip_address;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +51,8 @@ public class HomeFragment extends Fragment {
     private List<String> selectedCondition = new ArrayList<>();
     private String minPrice = "";
     private String maxPrice = "";
+    private String currUser="";
+    private  ActivityResultLauncher<Intent> productDetailsLauncher;
 
     public HomeFragment() {
 
@@ -58,17 +66,38 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
+       productDetailsLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        fetchData(); // Refresh data to reflect the purchase status
+                    }
+                }
+        );
+
+       SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserSession", MODE_PRIVATE);
+       currUser=sharedPreferences.getString("email","");
+
         recyclerView=view.findViewById(R.id.recyclerViewHome);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         itemList=new ArrayList<>();
 
-        adapter=new AdapterClassListItem(getContext(),itemList);
+        adapter=new AdapterClassListItem(getContext(),itemList,productDetailsLauncher);
         recyclerView.setAdapter(adapter);
 
         fetchData();
 
+
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Refresh data when returning to this fragment
+        fetchData(); // Call your method to refresh the RecyclerView data
     }
 
     public void applyFilters(List<String> types,List<String> status,List<String> condition, String minPrice, String maxPrice) {
@@ -130,14 +159,23 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject item = array.getJSONObject(i);
 
+                        String itemId = item.optString("item_id","0");
+                        String uploader = item.optString("user_email","not given");
+                        String date = item.optString("date_added","not given");
+                        String condition = item.optString("conditions","not given");
+                        String status = item.optString("status","not given");
                         String picture = item.optString("photo", null);
                         String title = item.optString("title", "No Title");
                         String category = item.optString("category", "No Category");
                         String price = item.optString("price", "0");
                         String availableFor = item.optString("available_for", "not available");
+                        String description = item.optString("description","not given");
 
-                        ListItem listItem = new ListItem(picture, title, category, price, availableFor);
-                        itemList.add(listItem);
+                        if(!uploader.equals(currUser)){
+                            ListItem listItem = new ListItem(itemId,picture, title, description,category, price, availableFor,uploader,date,condition,status);
+                            itemList.add(listItem);
+                        }
+
                     }
 
                     adapter.notifyDataSetChanged();

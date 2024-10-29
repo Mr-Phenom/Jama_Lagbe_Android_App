@@ -146,9 +146,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         statusUnavailable.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                selectedStatus.add("unavailable");
+                selectedStatus.add("sold");
             } else {
-                selectedStatus.remove("unavailable");
+                selectedStatus.remove("sold");
             }
             updateHomeFragment();
         });
