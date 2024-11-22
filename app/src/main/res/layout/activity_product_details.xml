@@ -220,13 +220,14 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonProductDetailsAction"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="Button" />
+        <Button
+            android:id="@+id/buttonProductDetailsAction"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#774BC5"
+            android:text="Button" />
 
     <Button
         android:id="@+id/buttonProductDetailsWishlist"

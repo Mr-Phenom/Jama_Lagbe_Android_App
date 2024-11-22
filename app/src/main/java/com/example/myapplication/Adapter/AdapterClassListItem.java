@@ -4,6 +4,7 @@ import static com.example.myapplication.MainActivity.ip_address;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,11 @@ public class AdapterClassListItem extends RecyclerView.Adapter<AdapterClassListI
         // Load image (use a library like Picasso or Glide for image loading)
         Glide.with(context)
                 .load("http://"+ip_address+"/" + item.getPicture()).into(holder.image);
+
+        // Reset button text, background color, and text color to default
+        holder.button.setBackgroundColor(Color.parseColor("#FF774BC5")); // Change this to your default color
+        holder.button.setTextColor(Color.WHITE);      // Change this to your default text color
+
         if(item.getAvailableFor().equals("sale"))
         {
             holder.button.setText("Buy");
@@ -67,10 +73,19 @@ public class AdapterClassListItem extends RecyclerView.Adapter<AdapterClassListI
         else if(item.getAvailableFor().equals("rent"))
         {
             holder.button.setText("Borrow");
+            holder.price.setText(item.getPrice()+"/day");
         }
         else
         {
             holder.button.setText("Get Donation");
+        }
+
+        if(item.getStatus().equals("sold"))
+        {
+            holder.button.setText("Sold");
+            holder.button.setBackgroundColor(Color.GRAY);
+            holder.button.setTextColor(Color.RED);
+           // holder.button.setVisibility(View.INVISIBLE);
         }
 
         holder.button.setOnClickListener(v -> {

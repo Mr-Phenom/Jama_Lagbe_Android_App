@@ -110,10 +110,17 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             }
-            else if(item.getItemId()==R.id.nav_donate)
+           if(item.getItemId()==R.id.nav_donate)
             {
                 Intent intent = new Intent(DashboardActivity.this,SellRentActivity.class);
                 intent.putExtra("type","donation");
+                startActivity(intent);
+                return true;
+            }
+
+            if(item.getItemId()==R.id.nav_history)
+            {
+                Intent intent = new Intent(DashboardActivity.this,HistoryTypeActivity.class);
                 startActivity(intent);
                 return true;
             }

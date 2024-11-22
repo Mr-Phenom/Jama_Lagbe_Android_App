@@ -11,9 +11,11 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SharedMemory;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,6 +42,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ImageView imageViewPhoto;
     Button buttonAction,buttonWishlist;
     String type,transactionType,statusUpdate;
+    String buyerEmail;
+    int days;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         textViewTitle.setText(title);
         textViewDescription.setText(description);
-        textViewPrice.setText(price);
+        textViewPrice.setText(price+"/day");
         textViewCategory.setText(category);
         textViewCondition.setText(condition);
         textViewDate.setText(date);
@@ -123,9 +128,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
-        String buyerEmail = sharedPreferences.getString("email","");
+        buyerEmail = sharedPreferences.getString("email","");
 
-        buttonAction.setOnClickListener(new View.OnClickListener() {
+        /*buttonAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ProductDetailsActivity.this);
@@ -140,6 +145,47 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 builder.setNegativeButton("Cancel",(dialog, which) -> dialog.dismiss());
                 builder.show();
             }
+        }); */
+
+        buttonAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (buttonAction.getText().toString().equals("Borrow")) {
+                    // Show a dialog to enter the number of days for borrowing
+                    AlertDialog.Builder daysInputDialog = new AlertDialog.Builder(ProductDetailsActivity.this);
+                    daysInputDialog.setTitle("Enter Borrow Duration");
+
+                    // Set up an EditText in the dialog
+                    final EditText input = new EditText(ProductDetailsActivity.this);
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    input.setHint("Enter days");
+                    daysInputDialog.setView(input);
+
+                    daysInputDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String daysString = input.getText().toString();
+
+                            if (!daysString.isEmpty()) {
+                                days = Integer.parseInt(daysString);
+
+                                // Proceed to the confirmation dialog
+                                showConfirmationDialog("Borrow", title, price, days);
+                            } else {
+                                // Notify the user if input is empty
+                                Toast.makeText(ProductDetailsActivity.this, "Please enter the number of days", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                    daysInputDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+                    daysInputDialog.show();
+
+                } else {
+                    // Directly show the confirmation dialog for other actions
+                    showConfirmationDialog(type, title, price, 0); // Pass 0 for days if not borrowing
+                }
+            }
         });
 
         buttonWishlist.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +195,28 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showConfirmationDialog(String type, String title, String price, int days) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProductDetailsActivity.this);
+        builder.setTitle("Confirm Purchase");
+
+        // Customize the message based on whether it's a borrow or another transaction
+        if (type.equals("Borrow")) {
+            builder.setMessage("Are you sure you want to borrow " + title + " for " + price + " for " + days + " days?");
+        } else {
+            builder.setMessage("Are you sure you want to " + type + " " + title + " for " + price + "?");
+        }
+
+        builder.setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                completePurchase(buyerEmail);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.show();
     }
 
     public void checkAndAddToWishlist(String buyerEmail,String itemId)
@@ -208,6 +276,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 params.put("transaction_type", transactionType);
                 //params.put("status", statusUpdate);
                 params.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+
+                if (transactionType.equals("borrow")) {
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DAY_OF_YEAR,days);
+                    params.put("borrow_duration", String.valueOf(days)); // assuming `days` is available here
+                    //params.put("borrow_start_date", borrowStartDate); // set `borrowStartDate` as needed
+                    params.put("borrow_end_date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime())); // set `borrowEndDate` as needed
+                }
                 return params;
             }
         };
